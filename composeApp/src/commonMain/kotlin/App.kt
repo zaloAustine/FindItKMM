@@ -1,35 +1,42 @@
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Shapes
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.Color
+import authentication.LoginScreen
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
 
-@OptIn(ExperimentalResourceApi::class)
+private val primaryColor = Color(0xFF0BC3CF)
+private val Amber = Color(0xFFFFC107)
+private val LightGray = Color(0xFFECEFF1)
+private val DarkGray = Color(0xFF212121)
+
+@Composable
+fun FindItTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        colors = lightColors(
+            primary = primaryColor,
+            secondary = Amber,
+            background = LightGray,
+            onBackground = DarkGray
+        ),
+        shapes = Shapes(),
+        content = content
+    )
+}
+
 @Composable
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        val greeting = remember { Greeting().greet() }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource("compose-multiplatform.xml"), null)
-                    Text("Compose: $greeting")
-                }
+    FindItTheme {
+        Navigator(LoginScreen()) { navigator ->
+            Scaffold { inner ->
+                SlideTransition(navigator = navigator, Modifier.padding(inner))
             }
         }
     }
