@@ -1,10 +1,9 @@
 package authentication
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,52 +16,53 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import components.AuthLogo
 
 /**
-Created by zaloaustine in 2/21/24.
+Created by zaloaustine in 2/23/24.
  */
-class SignUpScreen : Screen {
+class ResetPasswordScreen : Screen {
+
     @Composable
     override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
 
-        val username = remember { mutableStateOf("") }
-        val password = remember { mutableStateOf("") }
+        val oldPassword = remember { mutableStateOf("") }
+        val newPassword = remember { mutableStateOf("") }
         val confirmPassword = remember { mutableStateOf("") }
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(16.dp).fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            AuthLogo("Reset Password")
 
-            AuthLogo("Sign Up")
-
+            Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
-                value = username.value,
-                onValueChange = { username.value = it },
-                label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth()
+                value = oldPassword.value,
+                onValueChange = { oldPassword.value = it },
+                label = { Text("Old Password from Email") },
+                modifier = Modifier.fillMaxWidth(),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = password.value,
-                onValueChange = { password.value = it },
-                label = { Text("Password") },
+                value = newPassword.value,
+                onValueChange = { newPassword.value = it },
+                label = { Text("New Password") },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation()
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
                 value = confirmPassword.value,
@@ -73,17 +73,16 @@ class SignUpScreen : Screen {
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
             Button(
-                onClick = {}, modifier = Modifier
+                onClick = {
+
+                },
+                modifier = Modifier
                     .height(42.dp)
                     .fillMaxWidth()
             ) {
-                Text("Register")
+                Text("Reset")
             }
-            Text("Have an account? Login", modifier = Modifier.clickable {
-                navigator.push(LoginScreen())
-            }.padding(top = 24.dp), fontWeight = FontWeight.Light)
         }
     }
 }

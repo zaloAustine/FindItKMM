@@ -1,6 +1,5 @@
 package authentication
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,13 +16,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import components.AuthLogo
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 
 /**
 Created by zaloaustine in 2/21/24.
@@ -46,10 +46,7 @@ class LoginScreen : Screen {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Image(painter = painterResource("find-icon.xml"), null)
-            Text("Find It")
-
-            Spacer(modifier = Modifier.height(16.dp))
+            AuthLogo("Login")
 
             OutlinedTextField(
                 value = username.value,
@@ -78,15 +75,22 @@ class LoginScreen : Screen {
                 Text("Login")
             }
 
-            Text("Forgot password? Reset", modifier = Modifier.clickable {}.padding(12.dp))
+            Text(
+                "Forgot password? Reset", modifier = Modifier
+                    .padding(top = 24.dp)
+                    .clickable {
+                    navigator.push(ResetPasswordScreen())
+                    }, fontWeight = FontWeight.Light
+            )
 
             Text(
                 "Don't Have an account? Sign up",
                 modifier = Modifier
+                    .padding(16.dp)
                     .clickable {
                         navigator.push(SignUpScreen())
-                    }
-                    .padding(16.dp)
+                    },
+                fontWeight = FontWeight.Light
             )
         }
     }
